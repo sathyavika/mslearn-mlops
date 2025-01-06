@@ -1,15 +1,15 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 code: model
 command: >-
-  python 
-  --
-  --
+  python train.py --data ${{inputs.training_data}} --reg_rate ${{inputs.reg_rate}} 
 inputs:
   training_data: 
     type: uri_folder 
-    path: 
-  reg_rate: 0.01
+    path: azureml://datastores/workspaceblobstore/paths/experimentation_folder/data_folder
+  reg_rate: 
+  type: number
+  default: 0.01
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
-compute: 
-experiment_name: 
-description: 
+compute: azureml:my-compute-instance
+experiment_name: diabetes_experiment
+description: Job to train a diabetes classification model using logistic regression.
